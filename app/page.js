@@ -1,12 +1,12 @@
 'use client';
 
-import MainTabs from '@/components/MainTabs';
+import LoginPage from '@/components/auth/loginPage';
 import { Button } from '@heroui/react';
 
 export default function Home() {
   return (
-    <div >
-        <MainTabs />
+    <div className=''>
+        <LoginPage />
     </div>
   );
 }
