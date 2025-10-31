@@ -1,3 +1,6 @@
+'use client';
+
+import { Button } from "@heroui/react";
 
 export default function Home() {
   return (
@@ -6,6 +9,8 @@ export default function Home() {
         <h1 className="text-4xl font-bold text-zinc-900 dark:text-white">
           Мій Персональній Асистент
         </h1>
+
+        <Button className="" color="primary">Натисніть мене</Button>
       </main>
     </div>
   );
