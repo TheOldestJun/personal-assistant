@@ -1,15 +1,8 @@
+
 export default function Footer() {
-  return (
-    <footer className="flex h-24 w-full items-center justify-center border-t">
-      <a
-        className="flex items-center justify-center gap-2"
-        href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        Powered by{' '}
-        <img src="/vercel.svg" alt="Vercel Logo" className="h-4 w-4" />
-      </a>
-    </footer>
-  );
+    return (
+        <footer className="bg-sky-900 text-gray-400 text-center py-4 mt-auto">
+            <p>© {new Date().getFullYear()} Appway. Ніякі права не захищені. Користуйтесь!</p>
+        </footer>
+    );
 }
