@@ -44,9 +44,9 @@ model Order {
   quantity  Float
   // order statuses
   created   DateTime @default(now()) @db.Date
-  ordered   DateTime @default(now()) @db.Date
-  invoiced  DateTime @default(now()) @db.Date
-  payed     DateTime @default(now()) @db.Date
-  shipped   DateTime @default(now()) @db.Date
-  received  DateTime @default(now()) @db.Date
+  ordered   DateTime @db.Date
+  invoiced  DateTime @db.Date
+  payed     DateTime @db.Date
+  shipped   DateTime @db.Date
+  received  DateTime @db.Date
 }

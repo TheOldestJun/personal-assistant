@@ -1,0 +1,6 @@
+-- AlterTable
+ALTER TABLE `Order` ALTER COLUMN `ordered` DROP DEFAULT,
+    ALTER COLUMN `invoiced` DROP DEFAULT,
+    ALTER COLUMN `payed` DROP DEFAULT,
+    ALTER COLUMN `shipped` DROP DEFAULT,
+    ALTER COLUMN `received` DROP DEFAULT;
