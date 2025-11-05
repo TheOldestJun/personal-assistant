@@ -23,7 +23,30 @@ model User {
 }
 
 model Permission {
-  id     String  @id @default(cuid())
-  key    String
-  users  User[]
+  id    String @id @default(cuid())
+  key   String
+  users User[]
+}
+
+model Product {
+  id    String  @id @default(cuid())
+  title String  @unique
+  units String
+  Order Order[]
+}
+
+model Order {
+  id        String   @id @default(cuid())
+  createdBy String
+  // order details
+  product   Product  @relation(fields: [productId], references: [id])
+  productId String
+  quantity  Float
+  // order statuses
+  created   DateTime @default(now()) @db.Date
+  ordered   DateTime @default(now()) @db.Date
+  invoiced  DateTime @default(now()) @db.Date
+  payed     DateTime @default(now()) @db.Date
+  shipped   DateTime @default(now()) @db.Date
+  received  DateTime @default(now()) @db.Date
 }

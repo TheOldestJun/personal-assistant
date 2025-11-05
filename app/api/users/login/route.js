@@ -1,5 +1,4 @@
 import bcrypt from 'bcrypt';
-import jwt from 'jsonwebtoken';
 import { NextResponse } from 'next/server';
 
 import prisma from '@/prisma';
@@ -25,17 +24,10 @@ export async function POST(request) {
     if (!(await bcrypt.compare(password, user.password))) {
       return NextResponse.json({ error: 'Невірний пароль' }, { status: 400 });
     }
+    user.permissions = user.permissions.map(permission => permission.key);
     return NextResponse.json(
       {
-        token: jwt.sign(
-          {
-            id: user.id,
-            name: user.name,
-            permissions: user.permissions.map(p => p.key),
-          },
-          process.env.JWT_SECRET,
-          { expiresIn: '30d' },
-        ), 
+        user,
       },
       { status: 200 },
     );
