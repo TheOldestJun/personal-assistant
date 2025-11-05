@@ -2,7 +2,7 @@ import { configureStore } from '@reduxjs/toolkit';
 //import { ordersApi } from './services/orders';
 import { setupListeners } from '@reduxjs/toolkit/query';
 import authReducers from './reducers/authSlice';
-import currentOrderReducers from './reducers/currentsOrderSlice'
+import currentOrderReducers from './reducers/currentsOrderSlice';
 
 import { productsApi } from './services/products';
 import { usersApi } from './services/users';

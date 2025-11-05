@@ -35,11 +35,6 @@ const currentOrderSlice = createSlice({
   },
 });
 
-export const {
-  setProduct,
-  clearLine,
-  addOrder,
-  removeOrder,
-  clearOrders,
-} = currentOrderSlice.actions;
+export const { setProduct, clearLine, addOrder, removeOrder, clearOrders } =
+  currentOrderSlice.actions;
 export default currentOrderSlice.reducer;

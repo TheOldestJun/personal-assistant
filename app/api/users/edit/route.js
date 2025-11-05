@@ -4,12 +4,8 @@ import { NextResponse } from 'next/server';
 import prisma from '@/prisma';
 
 export async function PUT(request) {
-  let {id, email, password, name, permissions=[]} = await request.json();
-  if (
-    !email ||
-    !password ||
-    !name
-  ) {
+  let { id, email, password, name, permissions = [] } = await request.json();
+  if (!email || !password || !name) {
     return NextResponse.json(
       {
         error: 'Всі поля повинні бути заповнені',
@@ -23,7 +19,7 @@ export async function PUT(request) {
     //check if password changed
     const user = await prisma.user.findUnique({
       where: {
-        id
+        id,
       },
       select: {
         password: true,
@@ -34,7 +30,7 @@ export async function PUT(request) {
     }
     await prisma.user.update({
       where: {
-        id
+        id,
       },
       data: {
         email,

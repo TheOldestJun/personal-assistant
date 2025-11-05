@@ -5,27 +5,27 @@ import prisma from '@/prisma';
 
 export async function POST(req) {
   try {
-    const { name, email, password, permissions=[] } = await req.json();
+    const { name, email, password, permissions = [] } = await req.json();
     if (!name || !email || !password) {
       return NextResponse.json(
         { error: 'Всі поля повинні бути заповнені' },
         { status: 400 },
       );
     }
-        const hashedPassword = await bcrypt.hash(password, 10);
-        const user = await prisma.user.create({
-          data: {
-            name,
-            email,
-            password: hashedPassword,
-            permissions: permissions
-              ? { connect: permissions.map(p => ({ id: p })) }
-              : undefined,
-          },
-          include: {
-            permissions: true,
-          },
-        });
+    const hashedPassword = await bcrypt.hash(password, 10);
+    const user = await prisma.user.create({
+      data: {
+        name,
+        email,
+        password: hashedPassword,
+        permissions: permissions
+          ? { connect: permissions.map(p => ({ id: p })) }
+          : undefined,
+      },
+      include: {
+        permissions: true,
+      },
+    });
     return NextResponse.json(
       {
         message: `Користувача з email: ${user.email} створено`,

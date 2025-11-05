@@ -12,9 +12,9 @@ export async function POST(request) {
       where: {
         email: email,
       },
-        include: {
-            permissions: true,
-    },
+      include: {
+        permissions: true,
+      },
     });
     if (!user) {
       return NextResponse.json(
@@ -27,7 +27,7 @@ export async function POST(request) {
     }
     user.permissions = user.permissions.map(permission => permission.key);
     return NextResponse.json(
-     {
+      {
         token: jwt.sign(
           {
             id: user.id,
@@ -46,11 +46,14 @@ export async function POST(request) {
   }
 }
 
-export async function GET(){
+export async function GET() {
   try {
     const secret = process.env.JWT_SECRET;
     if (!secret) {
-      return NextResponse.json({ error: 'JWT secret not configured' }, { status: 500 });
+      return NextResponse.json(
+        { error: 'JWT secret not configured' },
+        { status: 500 },
+      );
     }
     return NextResponse.json(secret, { status: 200 });
   } catch (error) {

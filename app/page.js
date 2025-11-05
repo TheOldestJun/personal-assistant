@@ -5,8 +5,8 @@ import { Button } from '@heroui/react';
 
 export default function Home() {
   return (
-    <div className=''>
-        <LoginPage />
+    <div className="">
+      <LoginPage />
     </div>
   );
 }

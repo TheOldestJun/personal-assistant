@@ -1,20 +1,11 @@
-import Footer from "./footer";
-import Header from "./header";
+import Footer from './footer';
+import Header from './header';
 
 export default function Layout({ children }) {
   return (
-    <div
-      className="
-        flex flex-col 
-        h-dvh  /* динамическая высота видимой области */
-        bg-gray-100
-        overflow-hidden  /* убираем возможный скролл */
-      "
-    >
+    <div className="/* динамическая высота видимой области */ /* убираем возможный скролл */ flex h-dvh flex-col overflow-hidden bg-gray-100">
       <Header />
-      <main className="flex-1 overflow-auto p-6">
-        {children}
-      </main>
+      <main className="flex-1 overflow-auto p-6">{children}</main>
       <Footer />
     </div>
   );

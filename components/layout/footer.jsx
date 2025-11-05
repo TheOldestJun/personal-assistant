@@ -1,8 +1,10 @@
-
 export default function Footer() {
-    return (
-        <footer className="bg-sky-900 text-gray-400 text-center py-4 mt-auto">
-            <p>© {new Date().getFullYear()} Appway. Ніякі права не захищені. Користуйтесь!</p>
-        </footer>
-    );
+  return (
+    <footer className="mt-auto bg-sky-900 py-4 text-center text-gray-400">
+      <p>
+        © {new Date().getFullYear()} Appway. Ніякі права не захищені.
+        Користуйтесь!
+      </p>
+    </footer>
+  );
 }
