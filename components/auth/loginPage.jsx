@@ -1,4 +1,7 @@
+'use client';
 import axios from 'axios';
+import jwt from 'jsonwebtoken';
+import { useRouter } from 'next/navigation';
 import { useDispatch } from 'react-redux';
 
 import { encryptJwtWithSecret } from '@/libs/crypto';
@@ -16,18 +19,19 @@ import {
 
 export default function LoginPage() {
   const dispatch = useDispatch();
+  const router = useRouter();
 
   const handleLogin = async e => {
     e.preventDefault();
     let data = Object.fromEntries(new FormData(e.currentTarget));
     const response = await axios.post('/api/users/login', data);
-    console.log(response.data.token);
     if (response.data.token) {
       const secret = await getClientSecret();
-      console.log(secret);
-      const jwt = await encryptJwtWithSecret(secret, response.data.token);
-      localStorage.setItem('token', jwt);
+      const token = await encryptJwtWithSecret(secret, response.data.token);
+      localStorage.setItem('token', token);
       dispatch(login({ token: response.data.token }));
+      const userPermissions = jwt.decode(response.data.token).permissions;
+      if (userPermissions.includes('ADMIN')) router.push('/admin');
     } else throw new Error(response.data.error);
   };
 
