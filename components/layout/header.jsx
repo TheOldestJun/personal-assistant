@@ -1,11 +1,19 @@
 'use client';
 import { useState } from 'react';
 import { Menu, X } from 'lucide-react';
+import { useDispatch } from 'react-redux';
 
+import { logout } from '@/store/reducers/authSlice';
 import { Image } from '@heroui/react';
 
 export default function Header() {
+  const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
+
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    dispatch(logout());
+  };
 
   return (
     <header className="w-full bg-sky-300 text-sky-900 shadow-md">
@@ -29,6 +37,9 @@ export default function Header() {
           <a href="#" className="transition-colors hover:text-blue-400">
             Контакти
           </a>
+          <a href="#" className="transition-colors hover:text-red-400" onClick={handleLogout}>
+            Вихід
+          </a>
         </nav>
 
         {/* Кнопка бургер */}
@@ -38,9 +49,8 @@ export default function Header() {
           aria-label="Toggle Menu"
         >
           <div
-            className={`transition-transform duration-300 ${
-              open ? 'scale-110 rotate-180' : 'scale-100 rotate-0'
-            }`}
+            className={`transition-transform duration-300 ${open ? 'scale-110 rotate-180' : 'scale-100 rotate-0'
+              }`}
           >
             {open ? <X size={28} /> : <Menu size={28} />}
           </div>
@@ -68,6 +78,13 @@ export default function Header() {
           className="text-white transition-colors hover:text-blue-400"
         >
           Контакти
+        </a>
+        <a
+          href="#"
+          className="text-white transition-colors hover:text-red-400"
+          onClick={handleLogout}
+        >
+          Вихід
         </a>
       </div>
     </header>

@@ -19,7 +19,7 @@ export async function POST(req) {
         email,
         password: hashedPassword,
         permissions: permissions
-          ? { connect: permissions.map(p => ({ id: p })) }
+          ? { connect: permissions.map(p => ({ key: p })) }
           : undefined,
       },
       include: {

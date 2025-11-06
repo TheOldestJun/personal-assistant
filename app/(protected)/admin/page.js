@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useSelector } from 'react-redux';
 
-import AdminPanel from '@/components/admin/panel';
+import AdminPanel from '@/components/admin/mainPanel';
 
 export default function Admin() {
   const router = useRouter();

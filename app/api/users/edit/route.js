@@ -37,7 +37,7 @@ export async function PUT(request) {
         password,
         name,
         permissions: {
-          set: permissions.map(p => ({ id: p })),
+          set: permissions.map(p => ({ key: p })),
         },
       },
     });
