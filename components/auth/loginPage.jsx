@@ -32,6 +32,7 @@ export default function LoginPage() {
       dispatch(login({ token: response.data.token }));
       const userPermissions = jwt.decode(response.data.token).permissions;
       if (userPermissions.includes('ADMIN')) router.push('/admin');
+      else router.push(`/user?p=${userPermissions.toString().toLowerCase()}`);
     } else throw new Error(response.data.error);
   };
 

@@ -25,7 +25,8 @@ const AuthProvider = ({ children }) => {
           const userPermissions = jwt.decode(decryptedToken).permissions;
           if (userPermissions.includes('ADMIN')) {
             router.push('/admin');
-          }
+          } else
+            router.push(`/user?p=${userPermissions.toString().toLowerCase()}`);
         } catch (error) {
           console.error('Error decrypting JWT:', error);
           localStorage.removeItem('token');
