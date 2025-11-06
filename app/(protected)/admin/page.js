@@ -8,7 +8,6 @@ import AdminPanel from '@/components/admin/panel';
 export default function Admin() {
   const router = useRouter();
   const user = useSelector(state => state.auth.user);
-  console.log(user);
 
   useEffect(() => {
     if (!user) {
