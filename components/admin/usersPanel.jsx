@@ -1,5 +1,6 @@
 import { Tabs, Tab, Card, CardBody } from '@heroui/react';
 import DeleteUser from './usersPanel/deleteUser';
+import EditUser from './usersPanel/editUser';
 import NewUser from './usersPanel/newUser';
 
 export default function UsersPanel() {
@@ -11,7 +12,7 @@ export default function UsersPanel() {
                         <NewUser />
                     </Tab>
                     <Tab key="edit" title="Редагування">
-                        <h1>Редагування</h1>
+                        <EditUser />
                     </Tab>
                     <Tab key="delete" title="Видалення">
                         <DeleteUser />
