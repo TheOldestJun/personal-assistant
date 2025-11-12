@@ -4,7 +4,7 @@ import { permissions } from "@/libs/constants";
 import { useCreateUserMutation } from '@/store/services/users';
 import { Form, Input, Button, Divider, CheckboxGroup, Checkbox } from "@heroui/react";
 
-export default function newUser() {
+export default function NewUser() {
 
     const [perms, setPerms] = useState([]);
     const [createUser] = useCreateUserMutation();
