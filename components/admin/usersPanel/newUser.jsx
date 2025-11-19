@@ -72,10 +72,10 @@ export default function NewUser() {
             <Divider />
             <div className="flex gap-2">
                 <Button color="primary" type="submit">
-                    Submit
+                    Додати
                 </Button>
                 <Button type="reset" variant="flat">
-                    Reset
+                    Скасувати
                 </Button>
             </div>
         </Form>

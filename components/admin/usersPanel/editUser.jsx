@@ -8,7 +8,7 @@ import {
 import { Select, SelectItem, Button, Divider, Input, Checkbox, CheckboxGroup } from '@heroui/react'
 
 export default function EditUser() {
-    const [id, setId] = useState('');
+    const [id, setId] = useState(null);
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [name, setName] = useState('');
@@ -19,7 +19,7 @@ export default function EditUser() {
     const { data: users, isLoading, error } = useGetAllUsersQuery();
 
     if (isLoading) {
-        return <div>Loading...</div>;
+        return <div>Завантаження...</div>;
     }
     if (error) {
         return <div>Error: {error.message}</div>;
@@ -46,11 +46,12 @@ export default function EditUser() {
                 placeholder="Ім'я"
                 onSelectionChange={setId}
                 isClearable={true}
+                onClear={() => setId(null)}
             >
                 {(user) => <SelectItem>{user.label}</SelectItem>}
             </Select>
             <Divider />
-            <Button onPress={handleUserChange}>Обрати</Button>
+            <Button onPress={handleUserChange} color='primary' isDisabled={!id}>Обрати</Button>
             <Divider />
             <Input
                 isRequired

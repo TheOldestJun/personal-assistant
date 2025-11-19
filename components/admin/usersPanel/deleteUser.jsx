@@ -9,14 +9,13 @@ export default function DeleteUser() {
     const [value, setValue] = useState(null);
 
     if (isLoading) {
-        return <div>Loading...</div>;
+        return <div>Завантаження...</div>;
     }
     if (error) {
         return <div>Error: {error.message}</div>;
     }
 
     const options = users?.map(user => ({ label: user.name, key: user.id }));
-
 
     const handleDelete = async () => {
         try {
@@ -37,11 +36,12 @@ export default function DeleteUser() {
                 placeholder="Оберіть..."
                 onSelectionChange={setValue}
                 isClearable={true}
+                onClear={() => setValue(null)}
             >
                 {(user) => <SelectItem>{user.label}</SelectItem>}
             </Select>
             <Divider />
-            <Button onPress={handleDelete}>Видалити</Button>
+            <Button onPress={handleDelete} color="danger" isDisabled={!value}>Видалити</Button>
         </div>
 
     );
