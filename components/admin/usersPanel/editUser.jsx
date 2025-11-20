@@ -33,7 +33,7 @@ export default function EditUser() {
         console.log(currentUser.permissions);
         setEmail(currentUser.email);
         setName(currentUser.name);
-        setPerms(currentUser.permissions);
+        setPerms(currentUser.permissions.map(p => p.key));
     };
 
     return (
