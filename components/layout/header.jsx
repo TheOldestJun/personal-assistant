@@ -37,7 +37,11 @@ export default function Header() {
           <a href="#" className="transition-colors hover:text-blue-400">
             Контакти
           </a>
-          <a href="#" className="transition-colors hover:text-red-400" onClick={handleLogout}>
+          <a
+            href="#"
+            className="transition-colors hover:text-red-400"
+            onClick={handleLogout}
+          >
             Вихід
           </a>
         </nav>
@@ -49,8 +53,9 @@ export default function Header() {
           aria-label="Toggle Menu"
         >
           <div
-            className={`transition-transform duration-300 ${open ? 'scale-110 rotate-180' : 'scale-100 rotate-0'
-              }`}
+            className={`transition-transform duration-300 ${
+              open ? 'scale-110 rotate-180' : 'scale-100 rotate-0'
+            }`}
           >
             {open ? <X size={28} /> : <Menu size={28} />}
           </div>

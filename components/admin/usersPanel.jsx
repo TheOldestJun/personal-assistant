@@ -4,21 +4,21 @@ import EditUser from './usersPanel/editUser';
 import NewUser from './usersPanel/newUser';
 
 export default function UsersPanel() {
-    return (
-        <Card>
-            <CardBody>
-                <Tabs aria-label="Users panel" variant="underlined">
-                    <Tab key="new" title="Новий">
-                        <NewUser />
-                    </Tab>
-                    <Tab key="edit" title="Редагування">
-                        <EditUser />
-                    </Tab>
-                    <Tab key="delete" title="Видалення">
-                        <DeleteUser />
-                    </Tab>
-                </Tabs>
-            </CardBody>
-        </Card>
-    );
+  return (
+    <Card>
+      <CardBody>
+        <Tabs aria-label="Users panel" variant="underlined">
+          <Tab key="new" title="Новий">
+            <NewUser />
+          </Tab>
+          <Tab key="edit" title="Редагування">
+            <EditUser />
+          </Tab>
+          <Tab key="delete" title="Видалення">
+            <DeleteUser />
+          </Tab>
+        </Tabs>
+      </CardBody>
+    </Card>
+  );
 }
