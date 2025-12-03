@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import { permissions } from '@/libs/constants';
+import { permissions, extraSupplyPermissions } from '@/libs/constants';
 import {
   useGetAllUsersQuery,
   useEditUserMutation,
@@ -26,22 +26,34 @@ export default function EditUser() {
   const [editUser] = useEditUserMutation();
   const { data: users, isLoading, error } = useGetAllUsersQuery();
 
-  if (isLoading) {
-    return <div>Завантаження...</div>;
-  }
-  if (error) {
-    return <div>Error: {error.message}</div>;
-  }
+  if (isLoading) return <div>Завантаження...</div>;
+  if (error) return <div>Error: {error.message}</div>;
 
-  const options = users?.map(user => ({ label: user.name, key: user.id }));
+  const options = users?.map(user => ({
+    label: user.name,
+    key: user.id,
+  }));
 
-  const handleUserChange = async () => {
-    console.log(users);
+  const handleUserChange = () => {
     const currentUser = users.find(user => user.id === id.currentKey);
-    console.log(currentUser.permissions);
+
     setName(currentUser.name);
     setEmail(currentUser.email);
+
+    // Загружаем все permissions (включая extra)
     setPerms(currentUser.permissions.map(p => p.key));
+  };
+
+  const handleMainPermissions = values => {
+    setPerms(values);
+  };
+
+  const handleExtraPermissions = values => {
+    const withoutExtra = perms.filter(
+      p => !extraSupplyPermissions.some(e => e.key === p),
+    );
+
+    setPerms([...withoutExtra, ...values]);
   };
 
   const handleClear = () => {
@@ -50,6 +62,11 @@ export default function EditUser() {
     setName('');
     setPerms([]);
   };
+
+  const hasSupplyAll = perms.includes('SUPPLY_ALL');
+  const selectedExtra = perms.filter(p =>
+    extraSupplyPermissions.some(e => e.key === p),
+  );
 
   return (
     <div className="flex w-full max-w-xs flex-col gap-4">
@@ -65,16 +82,18 @@ export default function EditUser() {
       >
         {user => <SelectItem>{user.label}</SelectItem>}
       </Select>
+
       <Divider />
+
       <Button onPress={handleUserChange} color="primary" isDisabled={!id}>
         Обрати
       </Button>
+
       <Divider />
+
       <Input
         isRequired
-        errorMessage="ВАЖЛИВО! Введіть ім'я користувача"
         label="Ім'я"
-        labelPlacement="outside"
         name="name"
         placeholder="Введіть ім'я користувача"
         type="text"
@@ -84,15 +103,13 @@ export default function EditUser() {
 
       <Input
         isRequired
-        errorMessage="ВАЖЛИВО!Введіть email"
         label="Електронна пошта"
-        labelPlacement="outside"
         name="email"
-        placeholder="Введіть ваш email"
         type="email"
         value={email}
         onValueChange={setEmail}
       />
+
       <Checkbox
         isSelected={changePassword}
         onValueChange={setChangePassword}
@@ -100,25 +117,25 @@ export default function EditUser() {
       >
         Змінити пароль?
       </Checkbox>
+
       {changePassword && (
         <Input
-          errorMessage="ВАЖЛИВО!Введіть пароль"
           label="Пароль"
-          labelPlacement="outside"
           name="password"
-          placeholder="Введіть ваш новий пароль"
           type="password"
           value={password}
           onValueChange={setPassword}
         />
       )}
+
       <Divider />
+
+      {/* Основные разрешения */}
       <CheckboxGroup
         color="primary"
         label="Оберіть дозволи"
         value={perms}
-        name="permissions"
-        onValueChange={setPerms}
+        onValueChange={handleMainPermissions}
       >
         {permissions.map(permission => (
           <Checkbox key={permission.key} value={permission.key}>
@@ -126,14 +143,36 @@ export default function EditUser() {
           </Checkbox>
         ))}
       </CheckboxGroup>
+
+      {/* Дополнительные разрешения */}
+      {hasSupplyAll && (
+        <>
+          <Divider />
+          <CheckboxGroup
+            color="secondary"
+            label="Додаткові дозволи для Забезпечення"
+            value={selectedExtra}
+            onValueChange={handleExtraPermissions}
+          >
+            {extraSupplyPermissions.map(item => (
+              <Checkbox key={item.key} value={item.key}>
+                {item.title}
+              </Checkbox>
+            ))}
+          </CheckboxGroup>
+        </>
+      )}
+
       <Divider />
+
       <Button
+        color="primary"
         onPress={() =>
           editUser({
             id: id?.currentKey,
             name,
             email,
-            password,
+            password: changePassword ? password : undefined,
             permissions: perms,
           })
         }

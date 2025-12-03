@@ -1,24 +1,24 @@
 import { Card, CardBody, Tabs, Tab } from '@heroui/react';
-import { Warehouse, Orderers, Executors } from './supplyTabs'
+import { Warehouse, Orderers, Executors } from './supplyTabs';
 
 const allTabs = [
   {
     key: 'warehouse',
     title: 'Склад',
     required: 'supply_warehouse',
-    component: (permissions) => <Warehouse permissions={permissions} />,
+    component: permissions => <Warehouse permissions={permissions} />,
   },
   {
     key: 'executors',
     title: 'Виконавці',
     required: 'supply_executors',
-    component: (permissions) => <Executors permissions={permissions} />,
+    component: permissions => <Executors permissions={permissions} />,
   },
   {
     key: 'orderers',
     title: 'Замовники',
     required: 'supply_orderers',
-    component: (permissions) => <Orderers permissions={permissions} />,
+    component: permissions => <Orderers permissions={permissions} />,
   },
 ];
 

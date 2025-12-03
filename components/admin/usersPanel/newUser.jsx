@@ -1,7 +1,7 @@
-import { useState } from "react";
+import { useState } from 'react';
 
-import { permissions, extraSupplyPermissions } from "@/libs/constants";
-import { useCreateUserMutation } from "@/store/services/users";
+import { permissions, extraSupplyPermissions } from '@/libs/constants';
+import { useCreateUserMutation } from '@/store/services/users';
 import {
   Form,
   Input,
@@ -9,20 +9,20 @@ import {
   Divider,
   CheckboxGroup,
   Checkbox,
-} from "@heroui/react";
+} from '@heroui/react';
 
 export default function NewUser() {
   const [perms, setPerms] = useState([]);
   const [createUser] = useCreateUserMutation();
 
   const handleMainPermissions = values => {
-    setPerms(values); // основной список пермишенов
+    setPerms(values); // основной список разрешений
   };
 
   const handleExtraPermissions = values => {
     // Убираем старые extra-perms и добавляем новые
     const withoutExtra = perms.filter(
-      p => !extraSupplyPermissions.some(e => e.key === p)
+      p => !extraSupplyPermissions.some(e => e.key === p),
     );
 
     setPerms([...withoutExtra, ...values]);
@@ -41,11 +41,11 @@ export default function NewUser() {
     }
   };
 
-  const hasSupplyAll = perms.includes("SUPPLY_ALL");
+  const hasSupplyAll = perms.includes('SUPPLY_ALL');
 
   // Получаем только выбранные extra-permissions
   const selectedExtra = perms.filter(p =>
-    extraSupplyPermissions.some(e => e.key === p)
+    extraSupplyPermissions.some(e => e.key === p),
   );
 
   return (
@@ -57,19 +57,9 @@ export default function NewUser() {
         placeholder="Введіть ім'я користувача"
       />
 
-      <Input
-        isRequired
-        label="Електронна пошта"
-        name="email"
-        type="email"
-      />
+      <Input isRequired label="Електронна пошта" name="email" type="email" />
 
-      <Input
-        isRequired
-        label="Пароль"
-        name="password"
-        type="password"
-      />
+      <Input isRequired label="Пароль" name="password" type="password" />
 
       <Divider />
 

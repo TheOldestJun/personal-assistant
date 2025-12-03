@@ -6,19 +6,19 @@ const allTabs = [
     key: 'kitchen',
     title: 'Кухня',
     required: 'kitchen_all',
-    component: (permissions) => <KitchenTab permissions={permissions} />,
+    component: permissions => <KitchenTab permissions={permissions} />,
   },
   {
     key: 'supply',
     title: 'Забезпечення',
     required: 'supply_all',
-    component: (permissions) => <SupplyTab permissions={permissions} />,
+    component: permissions => <SupplyTab permissions={permissions} />,
   },
   {
     key: 'water',
     title: 'Вода',
     required: 'water_all',
-    component: (permissions) => <WaterTab permissions={permissions} />,
+    component: permissions => <WaterTab permissions={permissions} />,
   },
 ];
 export default function MainTabs({ permissions }) {

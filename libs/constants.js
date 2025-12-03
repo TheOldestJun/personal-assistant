@@ -1,4 +1,3 @@
-
 export const permissions = [
   { key: 'ADMIN', title: 'Адміністратор' },
   { key: 'KITCHEN_ALL', title: 'Кухня' },
@@ -7,7 +6,7 @@ export const permissions = [
 ];
 
 export const extraSupplyPermissions = [
-  {key: 'SUPPLY_ORDERERS', title: 'Замовники'},
-  {key: 'SUPPLY_EXECUTORS', title: 'Виконавці'},
-  {key: 'SUPPLY_WAREHOUSE', title: 'Склад'},
-]
+  { key: 'SUPPLY_ORDERERS', title: 'Замовники' },
+  { key: 'SUPPLY_EXECUTORS', title: 'Виконавці' },
+  { key: 'SUPPLY_WAREHOUSE', title: 'Склад' },
+];
