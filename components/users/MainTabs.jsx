@@ -1,4 +1,4 @@
-import { Tabs, Tab, Card, CardBody } from '@heroui/react';
+import { Tabs, Tab } from '@heroui/react';
 import { KitchenTab, SupplyTab, WaterTab } from './index';
 
 const allTabs = [
@@ -6,19 +6,19 @@ const allTabs = [
     key: 'kitchen',
     title: 'Кухня',
     required: 'kitchen_all',
-    component: <KitchenTab />,
+    component: (permissions) => <KitchenTab permissions={permissions} />,
   },
   {
     key: 'supply',
     title: 'Забезпечення',
     required: 'supply_all',
-    component: <SupplyTab />,
+    component: (permissions) => <SupplyTab permissions={permissions} />,
   },
   {
     key: 'water',
     title: 'Вода',
     required: 'water_all',
-    component: <WaterTab />,
+    component: (permissions) => <WaterTab permissions={permissions} />,
   },
 ];
 export default function MainTabs({ permissions }) {
@@ -28,7 +28,7 @@ export default function MainTabs({ permissions }) {
       <Tabs aria-label="Main options" variant="underlined">
         {visibleTabs.map(tab => (
           <Tab key={tab.key} title={tab.title}>
-            {tab.component}
+            {tab.component(permissions)}
           </Tab>
         ))}
       </Tabs>

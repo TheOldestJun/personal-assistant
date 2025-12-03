@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import { permissions } from '@/libs/constants';
+import { permissions, extraSupplyPermissions } from '@/libs/constants';
 import { useCreateUserMutation } from '@/store/services/users';
 import {
   Form,
