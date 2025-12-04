@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import usePermissionTree from "@/hooks/usePermissionTree";
+import usePermissionTree from '@/hooks/usePermissionTree';
 import { permissionsTree } from '@/libs/constants';
 import { useCreateUserMutation } from '@/store/services/users';
 import {
@@ -16,11 +16,8 @@ import PermissionGroup from './permissionGroup';
 export default function NewUser() {
   const [createUser] = useCreateUserMutation();
 
-  const {
-    perms,
-    togglePermission,
-    toggleChildren,
-  } = usePermissionTree(permissionsTree);
+  const { perms, togglePermission, toggleChildren } =
+    usePermissionTree(permissionsTree);
 
   const onSubmit = async e => {
     e.preventDefault();

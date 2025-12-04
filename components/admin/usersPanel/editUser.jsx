@@ -23,12 +23,8 @@ export default function EditUser() {
   const [password, setPassword] = useState('');
   const [name, setName] = useState('');
   const [changePassword, setChangePassword] = useState(false);
-  const {
-    perms,
-    setPerms,
-    togglePermission,
-    toggleChildren,
-  } = usePermissionTree(permissionsTree);
+  const { perms, setPerms, togglePermission, toggleChildren } =
+    usePermissionTree(permissionsTree);
 
   const [editUser] = useEditUserMutation();
   const { data: users, isLoading, error } = useGetAllUsersQuery();
@@ -125,37 +121,6 @@ export default function EditUser() {
         togglePermission={togglePermission}
         toggleChildren={toggleChildren}
       />
-
-      {/*       <CheckboxGroup
-        color="primary"
-        label="Оберіть дозволи"
-        value={perms}
-        onValueChange={handleMainPermissions}
-      >
-        {permissions.map(permission => (
-          <Checkbox key={permission.key} value={permission.key}>
-            {permission.title}
-          </Checkbox>
-        ))}
-      </CheckboxGroup>
-
-      {hasSupplyAll && (
-        <>
-          <Divider />
-          <CheckboxGroup
-            color="secondary"
-            label="Додаткові дозволи для Забезпечення"
-            value={selectedExtra}
-            onValueChange={handleExtraPermissions}
-          >
-            {extraSupplyPermissions.map(item => (
-              <Checkbox key={item.key} value={item.key}>
-                {item.title}
-              </Checkbox>
-            ))}
-          </CheckboxGroup>
-        </>
-      )} */}
 
       <Divider />
 
