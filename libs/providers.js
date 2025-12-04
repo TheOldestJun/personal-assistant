@@ -8,6 +8,7 @@ import { useDispatch } from 'react-redux';
 import { login } from '@/store/reducers/authSlice';
 import { store } from '@/store/store';
 import { HeroUIProvider } from '@heroui/react';
+import { ToastProvider, addToast } from '@heroui/react';
 import { decryptJwtWithSecret } from './crypto';
 import { getClientSecret } from './secretProvider';
 
@@ -29,6 +30,11 @@ const AuthProvider = ({ children }) => {
             router.push(`/user?p=${userPermissions.toString().toLowerCase()}`);
         } catch (error) {
           console.error('Error decrypting JWT:', error);
+          addToast({
+            title: 'Помилка',
+            description: `Помилка зчитування JWT: ${error.message}`,
+            color: 'danger',
+          });
           localStorage.removeItem('token');
         }
       }
@@ -42,7 +48,24 @@ export default function Providers({ children }) {
   return (
     <Provider store={store}>
       <AuthProvider>
-        <HeroUIProvider>{children}</HeroUIProvider>
+        <HeroUIProvider>
+          {children}
+          <ToastProvider
+            placement="top-center"
+            toastOffset={60}
+            toastProps={{
+              radius: 'md',
+              color: 'primary',
+              variant: 'flat',
+              timeout: 2000,
+              hideIcon: true,
+              classNames: {
+                closeButton:
+                  'opacity-100 absolute right-4 top-1/2 -translate-y-1/2',
+              },
+            }}
+          />
+        </HeroUIProvider>
       </AuthProvider>
     </Provider>
   );
