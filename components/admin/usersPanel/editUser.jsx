@@ -1,6 +1,7 @@
 import { useState } from 'react';
 
-import { permissions, extraSupplyPermissions } from '@/libs/constants';
+import usePermissionTree from '@/hooks/usePermissionTree';
+import { permissionsTree } from '@/libs/constants';
 import {
   useGetAllUsersQuery,
   useEditUserMutation,
@@ -14,14 +15,20 @@ import {
   Checkbox,
   CheckboxGroup,
 } from '@heroui/react';
+import PermissionGroup from './permissionGroup';
 
 export default function EditUser() {
   const [id, setId] = useState(null);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [name, setName] = useState('');
-  const [perms, setPerms] = useState([]);
   const [changePassword, setChangePassword] = useState(false);
+  const {
+    perms,
+    setPerms,
+    togglePermission,
+    toggleChildren,
+  } = usePermissionTree(permissionsTree);
 
   const [editUser] = useEditUserMutation();
   const { data: users, isLoading, error } = useGetAllUsersQuery();
@@ -44,29 +51,12 @@ export default function EditUser() {
     setPerms(currentUser.permissions.map(p => p.key));
   };
 
-  const handleMainPermissions = values => {
-    setPerms(values);
-  };
-
-  const handleExtraPermissions = values => {
-    const withoutExtra = perms.filter(
-      p => !extraSupplyPermissions.some(e => e.key === p),
-    );
-
-    setPerms([...withoutExtra, ...values]);
-  };
-
   const handleClear = () => {
     setId(null);
     setEmail('');
     setName('');
     setPerms([]);
   };
-
-  const hasSupplyAll = perms.includes('SUPPLY_ALL');
-  const selectedExtra = perms.filter(p =>
-    extraSupplyPermissions.some(e => e.key === p),
-  );
 
   return (
     <div className="flex w-full max-w-xs flex-col gap-4">
@@ -80,7 +70,7 @@ export default function EditUser() {
         isClearable={true}
         onClear={handleClear}
       >
-        {user => <SelectItem>{user.label}</SelectItem>}
+        {user => <SelectItem key={user.key}>{user.label}</SelectItem>}
       </Select>
 
       <Divider />
@@ -129,9 +119,14 @@ export default function EditUser() {
       )}
 
       <Divider />
+      <PermissionGroup
+        tree={permissionsTree}
+        perms={perms}
+        togglePermission={togglePermission}
+        toggleChildren={toggleChildren}
+      />
 
-      {/* Основные разрешения */}
-      <CheckboxGroup
+      {/*       <CheckboxGroup
         color="primary"
         label="Оберіть дозволи"
         value={perms}
@@ -144,7 +139,6 @@ export default function EditUser() {
         ))}
       </CheckboxGroup>
 
-      {/* Дополнительные разрешения */}
       {hasSupplyAll && (
         <>
           <Divider />
@@ -161,7 +155,7 @@ export default function EditUser() {
             ))}
           </CheckboxGroup>
         </>
-      )}
+      )} */}
 
       <Divider />
 

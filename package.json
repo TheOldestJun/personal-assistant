@@ -26,6 +26,7 @@
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
     "babel-plugin-react-compiler": "1.0.0",
+    "baseline-browser-mapping": "^2.8.32",
     "prettier": "^3.6.2",
     "prisma": "^6.19.0",
     "tailwindcss": "^4"
