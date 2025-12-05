@@ -1,4 +1,4 @@
-import { Card, CardBody, Tabs, Tab } from '@heroui/react';
+import { Tabs, Tab } from '@heroui/react';
 import { Warehouse, Orderers, Executors } from './supplyTabs';
 
 const allTabs = [
