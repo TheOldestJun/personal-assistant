@@ -3,14 +3,7 @@ import { useState } from 'react';
 import usePermissionTree from '@/hooks/usePermissionTree';
 import { permissionsTree } from '@/libs/constants';
 import { useCreateUserMutation } from '@/store/services/users';
-import {
-  Form,
-  Input,
-  Button,
-  Divider,
-  CheckboxGroup,
-  Checkbox,
-} from '@heroui/react';
+import { Form, Input, Button, Divider, addToast } from '@heroui/react';
 import PermissionGroup from './permissionGroup';
 
 export default function NewUser() {
@@ -22,10 +15,22 @@ export default function NewUser() {
   const onSubmit = async e => {
     e.preventDefault();
     let data = Object.fromEntries(new FormData(e.target));
-
     data.permissions = perms;
-
-    await createUser(data);
+    try {
+      const result = await createUser(data);
+      if (result.error) {
+        addToast({
+          title: 'Помилка',
+          description: result.data.error,
+          color: 'danger',
+        });
+      } else {
+        addToast({
+          title: result.data.message,
+          type: 'success',
+        });
+      }
+    } catch (error) {}
   };
 
   return (

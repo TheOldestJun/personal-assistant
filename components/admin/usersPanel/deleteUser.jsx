@@ -4,7 +4,7 @@ import {
   useDeleteUserMutation,
   useGetAllUsersQuery,
 } from '@/store/services/users';
-import { Select, SelectItem, Button, Divider } from '@heroui/react';
+import { Select, SelectItem, Button, Divider, addToast } from '@heroui/react';
 
 export default function DeleteUser() {
   const [deleteUser] = useDeleteUserMutation();
@@ -23,9 +23,18 @@ export default function DeleteUser() {
   const handleDelete = async () => {
     try {
       const response = await deleteUser(value.currentKey);
-      console.log(response);
+      if (response) {
+        addToast({
+          title: response.data.message,
+          type: 'success',
+        });
+      }
     } catch (error) {
-      throw new Error(error.message);
+      addToast({
+        title: 'Помилка',
+        description: error.message,
+        color: 'danger',
+      });
     }
   };
 

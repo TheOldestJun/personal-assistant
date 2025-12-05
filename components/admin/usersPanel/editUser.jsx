@@ -54,6 +54,22 @@ export default function EditUser() {
     setPerms([]);
   };
 
+  const handleEdit = async () => {
+    const response = await editUser({
+      id: id?.currentKey,
+      name,
+      email,
+      permissions: perms,
+      password: changePassword ? password : undefined,
+    });
+    if (response) {
+      addToast({
+        title: response.data.message,
+        type: 'success',
+      });
+    }
+  };
+
   return (
     <div className="flex w-full max-w-xs flex-col gap-4">
       <Select
@@ -124,18 +140,7 @@ export default function EditUser() {
 
       <Divider />
 
-      <Button
-        color="primary"
-        onPress={() =>
-          editUser({
-            id: id?.currentKey,
-            name,
-            email,
-            password: changePassword ? password : undefined,
-            permissions: perms,
-          })
-        }
-      >
+      <Button color="primary" onPress={handleEdit}>
         Зберегти
       </Button>
     </div>
