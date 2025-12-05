@@ -57,7 +57,7 @@ model Safekeeping {
   name     String //Наименование
   units    String //ЕИ
   quantity Float //Кол-во
-  gok      Float? //48201
+  gok      Float? //ГОК
   order    Float? //Забрать
   ferro    Float? //Забрано
   notes    String? //Примечание

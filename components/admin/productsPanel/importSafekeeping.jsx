@@ -10,6 +10,7 @@ import {
   Progress,
   addToast,
 } from '@heroui/react';
+import { ClearTableButton } from './clearTableButton';
 
 export default function ImportSafekeeping() {
   const [loading, setLoading] = useState(false);
@@ -89,6 +90,7 @@ export default function ImportSafekeeping() {
             className="mt-1"
           />
         )}
+        <ClearTableButton />
       </CardBody>
     </Card>
   );

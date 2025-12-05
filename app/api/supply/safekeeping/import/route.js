@@ -48,7 +48,7 @@ export async function POST(req) {
       name: r['Наименование'] ?? null,
       units: r['ЕИ'] ?? null,
       quantity: Number(r['Кол-во']) || 0,
-      gok: Number(r['48201']) || 0,
+      gok: Number(r['ГОК']) || 0,
       ferro: Number(r['Забрано']) || 0,
       order: Number(r['Забрать']) || 0,
       notes: r['Примечание'] ?? null,
