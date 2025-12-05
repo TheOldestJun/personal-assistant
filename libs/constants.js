@@ -1,4 +1,3 @@
-
 export const permissionsTree = [
   {
     key: 'ADMIN',
@@ -14,13 +13,17 @@ export const permissionsTree = [
     children: [
       { key: 'SUPPLY_ORDERERS', title: 'Замовники' },
       { key: 'SUPPLY_EXECUTORS', title: 'Виконавці' },
-      { 
-        key: 'SUPPLY_WAREHOUSE', 
+      {
+        key: 'SUPPLY_WAREHOUSE',
         title: 'Склад',
         children: [
-          { key: 'SUPPLY_WAREHOUSE_SAFEKEEPING', title: 'Відповідальне зберігання' },
+          {
+            key: 'SUPPLY_WAREHOUSE_SAFEKEEPING',
+            title: 'Відповідальне зберігання',
+          },
           { key: 'SUPPLY_WAREHOUSE_RESERVED', title: 'Залишки по ГЗК' },
-        ]},
+        ],
+      },
     ],
   },
   {

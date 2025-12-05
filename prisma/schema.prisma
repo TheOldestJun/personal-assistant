@@ -8,7 +8,7 @@ generator client {
   provider = "prisma-client-js"
 }
 
- datasource db {
+datasource db {
   provider          = "mysql"
   url               = env("DATABASE_URL")
   shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
@@ -49,4 +49,16 @@ model Order {
   payed     DateTime @db.Date
   shipped   DateTime @db.Date
   received  DateTime @db.Date
+}
+
+model Safekeeping {
+  id       String @id @default(cuid())
+  code     String //Код ТМЦ
+  name     String //Наименование
+  units    String //ЕИ
+  quantity Float //Кол-во
+  gok      Float? //48201
+  order    Float? //Забрать
+  ferro    Float? //Забрано
+  notes    String? //Примечание
 }

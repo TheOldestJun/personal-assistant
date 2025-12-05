@@ -14,7 +14,7 @@ import {
   Input,
   Checkbox,
   CheckboxGroup,
-  addToast
+  addToast,
 } from '@heroui/react';
 import PermissionGroup from './permissionGroup';
 

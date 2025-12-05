@@ -5,6 +5,7 @@ import authReducers from './reducers/authSlice';
 import currentOrderReducers from './reducers/currentsOrderSlice';
 
 import { productsApi } from './services/products';
+import { safekeepingApi } from './services/safekeeping';
 import { usersApi } from './services/users';
 
 export const store = configureStore({
@@ -13,12 +14,14 @@ export const store = configureStore({
     currentOrder: currentOrderReducers,
     [usersApi.reducerPath]: usersApi.reducer,
     [productsApi.reducerPath]: productsApi.reducer,
+    [safekeepingApi.reducerPath]: safekeepingApi.reducer,
     //[ordersApi.reducerPath]: ordersApi.reducer,
   },
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware().concat([
       usersApi.middleware,
       productsApi.middleware,
+      safekeepingApi.middleware,
       //ordersApi.middleware,
     ]),
 });
