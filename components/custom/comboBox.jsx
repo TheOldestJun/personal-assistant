@@ -7,9 +7,11 @@ export default function ComboBox({
   value,
   onCreateOption,
   onSelectedOption,
+  isDisabled,
 }) {
   return (
     <CreatableSelect
+      isDisabled={isDisabled}
       isClearable
       unstyled
       noOptionsMessage={() => 'Нічого не знайдено'}

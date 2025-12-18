@@ -30,7 +30,7 @@ model Permission {
 
 model Product {
   id     String  @id @default(cuid())
-  title  String  @unique
+  title  String  
   units  Unit    @relation(fields: [unitId], references: [id])
   Order  Order[]
   unitId String
