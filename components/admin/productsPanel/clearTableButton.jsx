@@ -48,12 +48,11 @@ export function ClearTableButton() {
                             </ModalHeader>
 
                             <ModalBody>
-                                Ви впевнені, що хочете <b>повністю очистити таблицю Material</b>?
-                                <br />
-                                Цю дію не можна буде скасувати.
+                                <div className="text-center">Ви впевнені, що хочете <b>повністю очистити дані відповідального зберігання</b>?</div>
+                                <div className="text-center text-red-500">Цю дію не можна буде скасувати.</div>
                             </ModalBody>
 
-                            <ModalFooter>
+                            <ModalFooter className="flex justify-center">
                                 <Button
                                     variant="flat"
                                     onPress={onClose}
