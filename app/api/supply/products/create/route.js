@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+import { connect } from 'react-redux';
 
 import prisma from '@/prisma';
 
@@ -8,7 +9,14 @@ export async function POST(request) {
     const result = await prisma.product.create({
       data: {
         title,
-        units,
+        units: {
+          connect: {
+            id: units,
+          }
+        }
+      },
+      include: {
+        units: true,
       },
     });
     return NextResponse.json(result, { status: 201 });

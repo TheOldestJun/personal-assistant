@@ -29,10 +29,17 @@ model Permission {
 }
 
 model Product {
-  id    String  @id @default(cuid())
-  title String  @unique
-  units String
-  Order Order[]
+  id     String  @id @default(cuid())
+  title  String  @unique
+  units  Unit    @relation(fields: [unitId], references: [id])
+  Order  Order[]
+  unitId String
+}
+
+model Unit {
+  id       String    @id @default(cuid())
+  title    String    @unique
+  products Product[]
 }
 
 model Order {
@@ -52,7 +59,7 @@ model Order {
 }
 
 model Safekeeping {
-  id       String @id @default(cuid())
+  id       String  @id @default(cuid())
   code     String //Код ТМЦ
   name     String //Наименование
   units    String //ЕИ

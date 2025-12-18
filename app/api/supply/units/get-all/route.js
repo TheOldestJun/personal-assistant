@@ -4,14 +4,8 @@ import prisma from '@/prisma';
 
 export async function GET() {
   try {
-    const products = await prisma.product.findMany(
-      {
-        include: {
-          units: true,
-        },
-      },
-    );
-    return NextResponse.json(products, { status: 200 });
+    const units = await prisma.unit.findMany();
+    return NextResponse.json(units, { status: 200 });
   } catch (error) {
     return NextResponse.json({ error: error.message }, { status: 500 });
   }

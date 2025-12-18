@@ -12,7 +12,11 @@ export async function PUT(request) {
       },
       data: {
         title,
-        units,
+        units: {
+          set: {
+            id: units,
+          }
+        }
       },
     });
     return NextResponse.json(result, { status: 200 });
