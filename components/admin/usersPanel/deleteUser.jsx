@@ -1,5 +1,6 @@
 import { useState } from 'react';
 
+import InputSkeleton from '@/components/custom/inputSkeleton';
 import {
   useDeleteUserMutation,
   useGetAllUsersQuery,
@@ -12,7 +13,7 @@ export default function DeleteUser() {
   const [value, setValue] = useState(null);
 
   if (isLoading) {
-    return <div>Завантаження...</div>;
+    return <InputSkeleton label="Оберіть користувача для видалення" />;
   }
   if (error) {
     return <div>Error: {error.message}</div>;
@@ -40,11 +41,10 @@ export default function DeleteUser() {
 
   return (
     <div className="flex w-full max-w-xs flex-col gap-4">
+      <div className='text-sm'>Оберіть користувача для видалення</div>
       <Select
         className="max-w-xs"
         items={options}
-        label="Оберіть користувача для видалення"
-        labelPlacement="outside"
         placeholder="Оберіть..."
         onSelectionChange={setValue}
         isClearable={true}

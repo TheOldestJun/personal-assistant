@@ -1,13 +1,14 @@
 import { useState } from 'react';
 
 import ComboBox from '@/components/custom/comboBox';
+import InputSkeleton from '@/components/custom/inputSkeleton';
 import {
   useGetAllProductsQuery,
   useEditProductMutation,
   useDeleteProductMutation,
   useCreateProductMutation,
 } from '@/store/services/products';
-import { addToast, Button, Input } from '@heroui/react';
+import { addToast, Button, Input, Skeleton } from '@heroui/react';
 import EditButton from './editButton';
 
 export default function EditProductTitle() {
@@ -18,7 +19,7 @@ export default function EditProductTitle() {
   const [value, setValue] = useState(null);
   const [newValue, setNewValue] = useState(null);
   const [isEdit, setIsEdit] = useState(false);
-  if (isLoading) return <div>Завантаження...</div>;
+  if (isLoading) return <InputSkeleton />
   if (error) return <div>Error: {error.message}</div>;
 
   const options = data?.map(product => ({
@@ -72,6 +73,7 @@ export default function EditProductTitle() {
         }}
         onCreateOption={value => handleCreate(value)}
       />
+
       {value && (
         <div>
           <EditButton value={value} />

@@ -1,5 +1,6 @@
 import { useState } from 'react';
 
+import InputSkeleton from '@/components/custom/inputSkeleton';
 import usePermissionTree from '@/hooks/usePermissionTree';
 import { permissionsTree } from '@/libs/constants';
 import {
@@ -30,7 +31,7 @@ export default function EditUser() {
   const [editUser] = useEditUserMutation();
   const { data: users, isLoading, error } = useGetAllUsersQuery();
 
-  if (isLoading) return <div>Завантаження...</div>;
+  if (isLoading) return <InputSkeleton label={"Оберіть користувача"} />
   if (error) return <div>Error: {error.message}</div>;
 
   const options = users?.map(user => ({
@@ -73,11 +74,10 @@ export default function EditUser() {
 
   return (
     <div className="flex w-full max-w-xs flex-col gap-4">
+      <div className='text-sm'>Оберіть користувача</div>
       <Select
         className="max-w-xs"
         items={options}
-        label="Оберіть користувача"
-        labelPlacement="outside"
         placeholder="Ім'я"
         onSelectionChange={setId}
         isClearable={true}
@@ -91,59 +91,63 @@ export default function EditUser() {
       <Button onPress={handleUserChange} color="primary" isDisabled={!id}>
         Обрати
       </Button>
+      {name && (
+        <>
+          <Divider />
 
-      <Divider />
+          <Input
+            isRequired
+            label="Ім'я"
+            name="name"
+            placeholder="Введіть ім'я користувача"
+            type="text"
+            value={name}
+            onValueChange={setName}
+          />
 
-      <Input
-        isRequired
-        label="Ім'я"
-        name="name"
-        placeholder="Введіть ім'я користувача"
-        type="text"
-        value={name}
-        onValueChange={setName}
-      />
+          <Input
+            isRequired
+            label="Електронна пошта"
+            name="email"
+            type="email"
+            value={email}
+            onValueChange={setEmail}
+          />
 
-      <Input
-        isRequired
-        label="Електронна пошта"
-        name="email"
-        type="email"
-        value={email}
-        onValueChange={setEmail}
-      />
+          <Checkbox
+            isSelected={changePassword}
+            onValueChange={setChangePassword}
+            size="sm"
+          >
+            Змінити пароль?
+          </Checkbox>
 
-      <Checkbox
-        isSelected={changePassword}
-        onValueChange={setChangePassword}
-        size="sm"
-      >
-        Змінити пароль?
-      </Checkbox>
+          {changePassword && (
+            <Input
+              label="Пароль"
+              name="password"
+              type="password"
+              value={password}
+              onValueChange={setPassword}
+            />
+          )}
 
-      {changePassword && (
-        <Input
-          label="Пароль"
-          name="password"
-          type="password"
-          value={password}
-          onValueChange={setPassword}
-        />
+          <Divider />
+          <PermissionGroup
+            tree={permissionsTree}
+            perms={perms}
+            togglePermission={togglePermission}
+            toggleChildren={toggleChildren}
+          />
+
+          <Divider />
+
+          <Button color="primary" onPress={handleEdit}>
+            Зберегти
+          </Button>
+        </>
       )}
 
-      <Divider />
-      <PermissionGroup
-        tree={permissionsTree}
-        perms={perms}
-        togglePermission={togglePermission}
-        toggleChildren={toggleChildren}
-      />
-
-      <Divider />
-
-      <Button color="primary" onPress={handleEdit}>
-        Зберегти
-      </Button>
     </div>
   );
 }

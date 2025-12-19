@@ -1,12 +1,13 @@
 import { useState } from 'react';
 
 import ComboBox from '@/components/custom/comboBox';
+import InputSkeleton from '@/components/custom/inputSkeleton';
 import {
   useGetAllUnitsQuery,
   useDeleteUnitMutation,
   useCreateUnitMutation,
 } from '@/store/services/units';
-import { addToast, Button } from '@heroui/react';
+import { addToast, Button, Skeleton } from '@heroui/react';
 
 export default function EditUnitsTitle() {
   const { data, isLoading, error } = useGetAllUnitsQuery();
@@ -14,7 +15,7 @@ export default function EditUnitsTitle() {
   const [createUnit] = useCreateUnitMutation();
   const [value, setValue] = useState(null);
 
-  if (isLoading) return <div>Завантаження...</div>;
+  if (isLoading) return <InputSkeleton />
   if (error) return <div>Error: {error.message}</div>;
 
   const options = data?.map(product => ({
