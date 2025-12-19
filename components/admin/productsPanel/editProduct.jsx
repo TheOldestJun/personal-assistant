@@ -3,9 +3,8 @@ import EditProductTitle from './editProductTitle';
 import EditUnitsTitle from './editUnitsTitle';
 
 export default function EditProduct() {
-
   return (
-    <Card className=" w-full max-w-md">
+    <Card className="w-full max-w-md">
       <CardBody>
         <Tabs aria-label="Products edit panel" variant="underlined">
           <Tab key="edit product" title="назви ТМЦ">
