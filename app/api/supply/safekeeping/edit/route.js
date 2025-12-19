@@ -3,8 +3,13 @@ import { NextResponse } from 'next/server';
 import prisma from '@/prisma';
 
 export async function PUT(request) {
-  const body = await request.json();
-  const { id, gok, order, ferro } = body;
+  let body = await request.json();
+  let { id, gok, order, ferro } = body;
+  if (order === ferro) {
+     gok -= ferro;
+     order = 0;
+  }
+ 
   try {
     const result = await prisma.safekeeping.update({
       where: {
