@@ -40,7 +40,7 @@ export default function Safekeeping() {
     switch (columnKey) {
       case 'actions':
         return (
-          <ActionsPopover id={rowData.key} />
+          <ActionsPopover data={rowData} />
         )
       default:
         return value;
