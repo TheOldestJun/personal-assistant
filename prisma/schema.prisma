@@ -29,33 +29,34 @@ model Permission {
 }
 
 model Product {
-  id     String  @id @default(cuid())
-  title  String  
-  units  Unit    @relation(fields: [unitId], references: [id])
-  Order  Order[]
-  unitId String
+  id    String  @id @default(cuid())
+  title String  @unique
+  Order Order[]
 }
 
 model Unit {
-  id       String    @id @default(cuid())
-  title    String    @unique
-  products Product[]
+  id     String  @id @default(cuid())
+  title  String  @unique
+  orders Order[]
 }
 
 model Order {
   id        String   @id @default(cuid())
-  createdBy String
+  createdBy String //Кто создал
   // order details
   product   Product  @relation(fields: [productId], references: [id])
   productId String
+  units     Unit     @relation(fields: [unitId], references: [id])
+  unitId    String
   quantity  Float
+  notes     String? //Примечание
   // order statuses
   created   DateTime @default(now()) @db.Date
-  ordered   DateTime @db.Date
-  invoiced  DateTime @db.Date
-  payed     DateTime @db.Date
-  shipped   DateTime @db.Date
-  received  DateTime @db.Date
+  ordered   DateTime? @db.Date //Заказано
+  invoiced  DateTime? @db.Date //Получен счет
+  payed     DateTime? @db.Date //Оплачено
+  shipped   DateTime? @db.Date //Отгружено
+  received  DateTime? @db.Date //Получено
 }
 
 model Safekeeping {

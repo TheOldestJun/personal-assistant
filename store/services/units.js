@@ -15,16 +15,6 @@ export const unitsApi = createApi({
             ]
           : [{ type: 'Units', id: 'LIST' }],
     }),
-    getById: builder.query({
-      query: id => `get-by-id?id=${id}`,
-      providesTags: result =>
-        result
-          ? [
-              ...result.map(({ id }) => ({ type: 'Units', id })),
-              { type: 'Units', id: 'LIST' },
-            ]
-          : [{ type: 'Units', id: 'LIST' }],  
-    }),
     createUnit: builder.mutation({
       query: ({ ...data }) => ({
         url: 'create',
@@ -45,7 +35,6 @@ export const unitsApi = createApi({
 
 export const {
   useGetAllUnitsQuery,
-  useGetByIdQuery,
   useCreateUnitMutation,
   useDeleteUnitMutation,
 } = unitsApi;

@@ -46,6 +46,7 @@ export default function EditProduct() {
 
   const handleSelectedUnit = value => {
     console.log(value);
+    setUnits(value);
   };
 
   /*     const handleEdit = async () => {
@@ -78,6 +79,7 @@ export default function EditProduct() {
 
   const handleCreateUnit = async value => {
     console.log(value);
+    setUnits(value);
   };
 
   /*     const handleDelete = async () => {
@@ -104,7 +106,12 @@ export default function EditProduct() {
     <Card className="w-2xs md:w-2xl">
       <CardBody>
         <div className="relative flex w-full flex-col gap-2 md:flex-row">
-          <ProductTitleCombo handleSelected={handleSelectedProduct} handleCreate={handleCreateTitle} className="flex-1" />
+          <ProductTitleCombo
+            handleSelected={handleSelectedProduct}
+            handleCreate={handleCreateTitle}
+            className="flex-1"
+            value={product}
+          />
           <ProductUnitsCombo
             handleSelected={handleSelectedUnit}
             handleCreate={handleCreateUnit}
@@ -127,6 +134,9 @@ export default function EditProduct() {
             value={selected}
           /> */}
         </div>
+        {
+          (product && units) && <Button>Створити</Button>
+        }
         {/*         <Button
           isDisabled={!selected}
           className="mt-4"
