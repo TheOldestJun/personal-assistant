@@ -6,7 +6,6 @@ import {
   Card,
   CardBody,
   Button,
-  Input,
   Progress,
   addToast,
 } from '@heroui/react';

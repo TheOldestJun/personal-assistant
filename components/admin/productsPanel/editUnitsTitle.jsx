@@ -7,7 +7,7 @@ import {
   useDeleteUnitMutation,
   useCreateUnitMutation,
 } from '@/store/services/units';
-import { addToast, Button, Skeleton } from '@heroui/react';
+import { addToast, Button } from '@heroui/react';
 
 export default function EditUnitsTitle() {
   const { data, isLoading, error } = useGetAllUnitsQuery();

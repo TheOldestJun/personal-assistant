@@ -4,21 +4,17 @@ import ComboBox from '@/components/custom/comboBox';
 import InputSkeleton from '@/components/custom/inputSkeleton';
 import {
   useGetAllProductsQuery,
-  useEditProductMutation,
   useDeleteProductMutation,
   useCreateProductMutation,
 } from '@/store/services/products';
-import { addToast, Button, Input, Skeleton } from '@heroui/react';
+import { addToast, Button } from '@heroui/react';
 import EditButton from './editButton';
 
 export default function EditProductTitle() {
   const { data, isLoading, error } = useGetAllProductsQuery();
-  const [editProduct] = useEditProductMutation();
   const [deleteProduct] = useDeleteProductMutation();
   const [createProduct] = useCreateProductMutation();
   const [value, setValue] = useState(null);
-  const [newValue, setNewValue] = useState(null);
-  const [isEdit, setIsEdit] = useState(false);
   if (isLoading) return <InputSkeleton />
   if (error) return <div>Error: {error.message}</div>;
 

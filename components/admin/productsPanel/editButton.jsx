@@ -37,7 +37,6 @@ export default function EditButton({ value }) {
       });
     }
   }
-
   return (
     <>
       {/* Кнопка открытия модалки */}
