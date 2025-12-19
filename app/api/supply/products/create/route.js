@@ -1,5 +1,4 @@
 import { NextResponse } from 'next/server';
-import { connect } from 'react-redux';
 
 import prisma from '@/prisma';
 

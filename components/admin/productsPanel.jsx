@@ -7,7 +7,7 @@ export default function ProductsPanel() {
     <Card>
       <CardBody>
         <Tabs aria-label="Products panel" variant="underlined">
-          <Tab key="edit" title="Редагування">
+          <Tab key="edit" title="Редагування...">
             <EditProduct />
           </Tab>
           <Tab key="safekeeping" title="Відповідальне зберігання">

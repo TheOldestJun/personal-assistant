@@ -1,7 +1,6 @@
-"use client";
 import { useState } from "react";
-import axios from "axios";
 
+import { useEditProductMutation } from "@/store/services/products";
 import {
     Button,
     Modal,
@@ -10,41 +9,40 @@ import {
     ModalBody,
     ModalFooter,
     useDisclosure,
-    addToast
+    addToast,
+    Input
 } from "@heroui/react";
 
-export function ClearTableButton() {
+export default function EditButton({ value }) {
+    const [editProduct] = useEditProductMutation();
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
-    const [loading, setLoading] = useState(false);
+    const [newValue, setNewValue] = useState(null);
 
     async function handleClear(onClose) {
-        setLoading(true);
-
         try {
-            const res = await axios.post("/api/supply/safekeeping/clear");
-
+            const result = await editProduct(newValue);
             onClose();
-            addToast({
-                title: "Таблицю успішно очищено",
-                description: "Видалено рядків: " + res.data.deleted,
-                type: "success",
-            })
+            if (result.data) {
+                addToast({
+                    title: "ТМЦ успішно змінено",
+                    description: "Назва: " + result.data.title,
+                    type: "success",
+                })
+            }
         } catch (err) {
             addToast({
                 title: "Помилка",
                 description: err.message,
                 color: "danger",
             })
-        } finally {
-            setLoading(false);
         }
     }
 
     return (
         <>
             {/* Кнопка открытия модалки */}
-            <Button color="danger" variant="flat" onPress={onOpen}>
-                Очистити таблицю
+            <Button color="primary" onPress={onOpen} className="w-full mt-2">
+                Редагувати
             </Button>
 
             {/* Модальное окно */}
@@ -53,29 +51,29 @@ export function ClearTableButton() {
                     {(onClose) => (
                         <>
                             <ModalHeader className="text-lg font-semibold">
-                                Підтвердження дії
+                                Редагування ТМЦ
                             </ModalHeader>
 
                             <ModalBody>
-                                <div className="text-center">Ви впевнені, що хочете <b>повністю очистити дані відповідального зберігання</b>?</div>
-                                <div className="text-center text-red-500">Цю дію не можна буде скасувати.</div>
+                                <Input
+                                    defaultValue={value.label}
+                                    onChange={e => setNewValue({ id: value.value, title: e.target.value.toUpperCase() })}
+                                />
                             </ModalBody>
 
                             <ModalFooter className="flex justify-center">
                                 <Button
                                     variant="flat"
                                     onPress={onClose}
-                                    isDisabled={loading}
                                 >
                                     Скасувати
                                 </Button>
 
                                 <Button
-                                    color="danger"
+                                    color="success"
                                     onPress={() => handleClear(onClose)}
-                                    isLoading={loading}
                                 >
-                                    Так, очистити
+                                    Зберегти
                                 </Button>
                             </ModalFooter>
                         </>
@@ -83,5 +81,5 @@ export function ClearTableButton() {
                 </ModalContent>
             </Modal>
         </>
-    );
+    )
 }
