@@ -70,3 +70,12 @@ model Safekeeping {
   ferro    Float? //Забрано
   notes    String? //Примечание
 }
+
+model Reserved {
+  id    String     @id @default(cuid())
+  code  String
+  name  String
+  qty   Float
+  sum   Float
+  notes String
+}
