@@ -34,7 +34,7 @@ export async function processReserved(buffer) {
 
     const customer = Number(row[idxCustomer]);
     const code = row[idxCode];
-    if (!code) continue;
+    if (!code || !customer) continue;
 
     const name = row[idxName];
     const qty = Number(row[idxQty]) || 0;
@@ -44,8 +44,10 @@ export async function processReserved(buffer) {
     if (customer === 1000) notes = "rail";
     if (customer === 10100) notes = "ferro";
 
-    if (!map.has(code)) {
-      map.set(code, {
+    const key = `${code}_${customer}`;
+    
+    if (!map.has(key)) {
+      map.set(key, {
         code,
         name,
         qty: 0,
@@ -55,7 +57,7 @@ export async function processReserved(buffer) {
       });
     }
 
-    const obj = map.get(code);
+    const obj = map.get(key);
     obj.qty += qty;
     obj.sum += sum;
   }
