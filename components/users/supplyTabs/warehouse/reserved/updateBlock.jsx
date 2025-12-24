@@ -8,7 +8,7 @@ import {
     Card,
 } from '@heroui/react';
 
-export default function UpdateBlock() {
+export default function UpdateBlock({ className }) {
 
     const [file, setFile] = useState(null);
     const [loading, setLoading] = useState(false);
@@ -69,7 +69,7 @@ export default function UpdateBlock() {
     };
 
     return (
-        <>
+        <div className={className}>
             <div className='text-center'>Завантажити файл із резервами?</div>
             <div className=''>
 
@@ -111,7 +111,7 @@ export default function UpdateBlock() {
                 )}
             </div>
 
-        </>
+        </div>
 
     );
 }

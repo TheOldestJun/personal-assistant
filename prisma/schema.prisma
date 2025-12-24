@@ -75,6 +75,7 @@ model Reserved {
   id    String     @id @default(cuid())
   code  String
   name  String
+  unit String?
   qty   Float
   sum   Float
   notes String

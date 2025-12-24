@@ -25,6 +25,7 @@ export async function POST(req) {
         data: data.map(r => ({
           code: r.code,
           name: r.name,
+          unit: r.unit,
           qty: r.qty,
           sum: r.sum,
           notes: r.notes,
