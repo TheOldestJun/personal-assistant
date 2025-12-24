@@ -11,7 +11,7 @@ import {
   TableColumn,
   TableRow,
   TableCell,
-  getKeyValue
+  getKeyValue,
 } from '@heroui/react';
 import UpdateBlock from './reserved/updateBlock';
 
@@ -60,9 +60,8 @@ export default function Reserved() {
 
   return (
     <Card>
-      <CardHeader >
-        <UpdateBlock className='' />
-
+      <CardHeader>
+        <UpdateBlock className="" />
       </CardHeader>
 
       <CardBody>
@@ -84,9 +83,14 @@ export default function Reserved() {
             )}
           </TableHeader>
           <TableBody items={sortedItems}>
-            {(item) => (
-              <TableRow key={item.key} className={`hover:bg-blue-300 ${item.color === 'rail' ? 'bg-red-300' : ''}`} >
-                {(columnKey) => <TableCell>{getKeyValue(item, columnKey)}</TableCell>}
+            {item => (
+              <TableRow
+                key={item.key}
+                className={`hover:bg-blue-300 ${item.color === 'rail' ? 'bg-red-300' : ''}`}
+              >
+                {columnKey => (
+                  <TableCell>{getKeyValue(item, columnKey)}</TableCell>
+                )}
               </TableRow>
             )}
           </TableBody>

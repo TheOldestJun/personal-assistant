@@ -18,6 +18,4 @@ export const reservedApi = createApi({
   }),
 });
 
-export const {
-  useGetAllReservedQuery,
-} = reservedApi;
+export const { useGetAllReservedQuery } = reservedApi;

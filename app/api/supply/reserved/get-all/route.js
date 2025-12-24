@@ -1,9 +1,9 @@
-import { NextResponse } from "next/server";
+import { NextResponse } from 'next/server';
 
-import prisma from "@/prisma";
+import prisma from '@/prisma';
 
 export async function GET() {
-      try {
+  try {
     const reserved = await prisma.reserved.findMany();
     return NextResponse.json(reserved, { status: 200 });
   } catch (error) {

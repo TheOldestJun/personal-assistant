@@ -22,7 +22,7 @@ export async function processReserved(buffer) {
   const idxName = headerRow.indexOf('Наименование');
   const idxQty = headerRow.indexOf('Кол-во');
   const idxSum = headerRow.indexOf('Сумма');
-  const idxUnit = headerRow.indexOf("ЕИ");
+  const idxUnit = headerRow.indexOf('ЕИ');
 
   const rows = ws.getSheetValues().slice(4);
   const map = new Map();
@@ -40,7 +40,7 @@ export async function processReserved(buffer) {
     const name = row[idxName];
     const qty = Number(row[idxQty]) || 0;
     const sum = Number(row[idxSum]) || 0;
-    const unit = row[idxUnit] || "";
+    const unit = row[idxUnit] || '';
 
     let notes = null;
     if (customer === 1000) notes = 'rail';
@@ -56,7 +56,7 @@ export async function processReserved(buffer) {
         sum: 0,
         notes,
         customer,
-        unit
+        unit,
       });
     }
 
