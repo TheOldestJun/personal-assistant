@@ -20,8 +20,8 @@ export async function POST(req) {
   // === Запись в БД ===
   if (mode === 'db') {
     await prisma.$transaction([
-      prisma.inventory.deleteMany(),
-      prisma.inventory.createMany({
+      prisma.reserved.deleteMany(),
+      prisma.reserved.createMany({
         data: data.map(r => ({
           code: r.code,
           name: r.name,

@@ -1,93 +1,60 @@
 import { useState } from 'react';
-import axios from 'axios';
 
-import UkrainianFileInput from '@/components/custom/ukrainianFileInput';
+import { useGetAllReservedQuery } from '@/store/services/reserved';
 import {
   Card,
   CardBody,
   CardHeader,
-  Button,
-  Spinner,
-  addToast,
+  Table,
+  TableHeader,
+  TableBody,
+  TableColumn,
+  TableRow,
+  TableCell,
+  Divider
 } from '@heroui/react';
+import UpdateBlock from './reserved/updateBlock';
+
+const columns = [
+  { label: 'Код ТМЦ', key: 'code', sortable: true },
+  { label: 'Найменування', key: 'name', sortable: true },
+  { label: 'К-ть', key: 'qty' },
+  { label: 'Сума', key: 'sum' },
+];
 
 export default function Reserved() {
-  const [file, setFile] = useState(null);
-  const [loading, setLoading] = useState(false);
 
-  const submit = async mode => {
-    if (!file) return;
-
-    setLoading(true);
-
-    try {
-      const fd = new FormData();
-      fd.append('file', file);
-      fd.append('mode', mode);
-
-      const res = await fetch('/api/supply/reserved/import', {
-        method: 'POST',
-        body: fd,
-      });
-
-      if (!res.ok) {
-        throw new Error('Ошибка обработки файла');
-      }
-
-      if (mode === 'file') {
-        const blob = await res.blob();
-        const url = URL.createObjectURL(blob);
-
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = 'ТМЦ_сумма.xlsx';
-        a.click();
-
-        URL.revokeObjectURL(url);
-      } else {
-        const json = await res.json();
-        alert(`✅ Таблица перезаписана\nСтрок: ${json.inserted}`);
-      }
-    } catch (e) {
-      alert(`❌ ${e.message}`);
-    } finally {
-      setLoading(false);
-    }
-  };
+  const { data, isLoading, error } = useGetAllReservedQuery();
 
   return (
     <Card>
       <CardHeader>
-        <div>
-          <div>Завантажити файл із резервами?</div>
-          <UkrainianFileInput
-            className="mt-2 w-full"
-            id="excel-file"
-            accept=".xlsx"
-            onChange={e => {
-              const f = e.target.files[0];
-              setFile(f || null);
-            }}
-            file={file}
-            chooseFile={() => document.getElementById('excel-file').click()}
-          />
-          <Button
-            color="primary"
-            isDisabled={!file || loading}
-            onPress={() => submit('file')}
-            className="mt-2 w-full"
-          >
-            Завантажити опрацьований Excel
-          </Button>
-          {loading && (
-            <div className="text-default-500 flex items-center gap-2 text-sm">
-              <Spinner size="sm" />
-              Опрацювання файла…
-            </div>
-          )}
-        </div>
+        <UpdateBlock />
+
       </CardHeader>
-      <CardBody>Зарезервовано</CardBody>
+
+      <CardBody>
+        <Table
+          aria-label="safekeeping table"
+          selectionMode="single"
+          /* sortDescriptor={sortDescriptor}
+          onSortChange={setSortDescriptor} */
+          className="min-w-3xl"
+          isStriped
+          isCompact
+          radius="none"
+        >
+          <TableHeader columns={columns}>
+            {column => (
+              <TableColumn key={column.key} allowsSorting={column.sortable}>
+                {column.label}
+              </TableColumn>
+            )}
+          </TableHeader>
+          <TableBody>
+          </TableBody>
+        </Table>
+      </CardBody>
     </Card>
   );
 }
