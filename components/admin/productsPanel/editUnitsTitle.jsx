@@ -15,7 +15,7 @@ export default function EditUnitsTitle() {
   const [createUnit] = useCreateUnitMutation();
   const [value, setValue] = useState(null);
 
-  if (isLoading) return <InputSkeleton />
+  if (isLoading) return <InputSkeleton />;
   if (error) return <div>Error: {error.message}</div>;
 
   const options = data?.map(product => ({

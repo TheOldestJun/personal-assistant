@@ -39,33 +39,36 @@ export default function Safekeeping() {
     const value = getKeyValue(rowData, columnKey);
     switch (columnKey) {
       case 'actions':
-        return (
-          <ActionsPopover data={rowData} />
-        )
+        return <ActionsPopover data={rowData} />;
       default:
         return value;
     }
   }, []);
 
-  const rows = useMemo(() => data?.map(row => ({
-    key: row.id,
-    code: row.code,
-    label: row.name,
-    units: row.units,
-    quantity: row.quantity,
-    gok: row.gok,
-    ferro: row.ferro,
-    order: row.order,
-    color: row.notes
-  })), [data]);
+  const rows = useMemo(
+    () =>
+      data?.map(row => ({
+        key: row.id,
+        code: row.code,
+        label: row.name,
+        units: row.units,
+        quantity: row.quantity,
+        gok: row.gok,
+        ferro: row.ferro,
+        order: row.order,
+        color: row.notes,
+      })),
+    [data],
+  );
 
   const sortedItems = useMemo(() => {
     return rows.sort((a, b) => {
       const first = getKeyValue(a, sortDescriptor.column);
       const second = getKeyValue(b, sortDescriptor.column);
-      const cmp = String(first).localeCompare(String(second), 'ru', { numeric: true });
+      const cmp = String(first).localeCompare(String(second), 'ru', {
+        numeric: true,
+      });
       return sortDescriptor.direction === 'descending' ? -cmp : cmp;
-
     });
   }, [sortDescriptor, rows]);
 
@@ -77,23 +80,26 @@ export default function Safekeeping() {
           selectionMode="single"
           sortDescriptor={sortDescriptor}
           onSortChange={setSortDescriptor}
-          className='min-w-3xl'
+          className="min-w-3xl"
           isStriped
           isCompact
-          radius='none'
+          radius="none"
         >
           <TableHeader columns={columns}>
             {column => (
-              <TableColumn key={column.key} allowsSorting={column.sortable}>{column.label}</TableColumn>
+              <TableColumn key={column.key} allowsSorting={column.sortable}>
+                {column.label}
+              </TableColumn>
             )}
           </TableHeader>
           <TableBody items={sortedItems}>
             {item => (
-              <TableRow key={item.key} className={`hover:bg-blue-300 ${item.color === "rail" ? "bg-red-300" : ""}`}>
+              <TableRow
+                key={item.key}
+                className={`hover:bg-blue-300 ${item.color === 'rail' ? 'bg-red-300' : ''}`}
+              >
                 {columnKey => (
-                  <TableCell>
-                    {renderCell(item, columnKey)}
-                  </TableCell>
+                  <TableCell>{renderCell(item, columnKey)}</TableCell>
                 )}
               </TableRow>
             )}

@@ -1,23 +1,24 @@
-import ExcelJS from "exceljs";
-import { NextResponse } from "next/server";
+import ExcelJS from 'exceljs';
+import { NextResponse } from 'next/server';
 
-import { processReserved } from "@/libs/processReserved";
-import  prisma  from "@/prisma";
+import createSheet from '@/libs/createSheet';
+import { processReserved } from '@/libs/processReserved';
+import prisma from '@/prisma';
 
 export async function POST(req) {
   const formData = await req.formData();
-  const file = formData.get("file");
-  const mode = formData.get("mode");
+  const file = formData.get('file');
+  const mode = formData.get('mode');
 
   if (!file) {
-    return NextResponse.json({ error: "Файл не передан" }, { status: 400 });
+    return NextResponse.json({ error: 'Файл не передан' }, { status: 400 });
   }
 
   const buffer = Buffer.from(await file.arrayBuffer());
   const data = await processReserved(buffer);
 
   // === Запись в БД ===
-  if (mode === "db") {
+  if (mode === 'db') {
     await prisma.$transaction([
       prisma.inventory.deleteMany(),
       prisma.inventory.createMany({
@@ -39,36 +40,27 @@ export async function POST(req) {
 
   // === Формирование Excel ===
   const wbOut = new ExcelJS.Workbook();
-  const wsOut = wbOut.addWorksheet("Sheet1");
+  const railRows = data.filter(r => r.customer === 1000);
+  const ferroRows = data.filter(r => r.customer === 10100);
 
-  wsOut.addRow(["Код ТМЦ", "Наименование", "Кол-во", "Сумма"]);
+  if (railRows.length) {
+    createSheet(wbOut, 'ЖДЦ', railRows);
+  }
 
-  const greenFill = {
-    type: "pattern",
-    pattern: "solid",
-    fgColor: { argb: "E6F4EA" }, // светло-зелёный
-  };
-
-  data.forEach(r => {
-    const row = wsOut.addRow([r.code, r.name, r.qty, r.sum]);
-
-    if (r.customer === 1000) {
-      row.eachCell(cell => {
-        cell.fill = greenFill;
-      });
-    }
-  });
+  if (ferroRows.length) {
+    createSheet(wbOut, 'ФЕРРОТРАНС', ferroRows);
+  }
 
   const bufferOut = await wbOut.xlsx.writeBuffer();
 
-  const filename = "ТМЦ_сумма.xlsx";
-const encoded = encodeURIComponent(filename);
+  const filename = 'ТМЦ_сумма.xlsx';
+  const encoded = encodeURIComponent(filename);
 
   return new NextResponse(bufferOut, {
     headers: {
-      "Content-Type":
-        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-      "Content-Disposition": `attachment; filename=tmc_sum.xlsx; filename*=UTF-8''${encoded}`,
+      'Content-Type':
+        'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+      'Content-Disposition': `attachment; filename=tmc_sum.xlsx; filename*=UTF-8''${encoded}`,
     },
   });
 }

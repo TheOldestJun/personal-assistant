@@ -41,7 +41,7 @@ export default function DeleteUser() {
 
   return (
     <div className="flex w-full max-w-xs flex-col gap-4">
-      <div className='text-sm'>Оберіть користувача для видалення</div>
+      <div className="text-sm">Оберіть користувача для видалення</div>
       <Select
         className="max-w-xs"
         items={options}

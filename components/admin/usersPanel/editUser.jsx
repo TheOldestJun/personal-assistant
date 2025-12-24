@@ -31,7 +31,7 @@ export default function EditUser() {
   const [editUser] = useEditUserMutation();
   const { data: users, isLoading, error } = useGetAllUsersQuery();
 
-  if (isLoading) return <InputSkeleton label={"Оберіть користувача"} />
+  if (isLoading) return <InputSkeleton label={'Оберіть користувача'} />;
   if (error) return <div>Error: {error.message}</div>;
 
   const options = users?.map(user => ({
@@ -74,7 +74,7 @@ export default function EditUser() {
 
   return (
     <div className="flex w-full max-w-xs flex-col gap-4">
-      <div className='text-sm'>Оберіть користувача</div>
+      <div className="text-sm">Оберіть користувача</div>
       <Select
         className="max-w-xs"
         items={options}
@@ -147,7 +147,6 @@ export default function EditUser() {
           </Button>
         </>
       )}
-
     </div>
   );
 }

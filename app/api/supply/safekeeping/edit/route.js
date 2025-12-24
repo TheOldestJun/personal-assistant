@@ -6,10 +6,10 @@ export async function PUT(request) {
   let body = await request.json();
   let { id, gok, order, ferro } = body;
   if (order === ferro) {
-     gok -= ferro;
-     order = 0;
+    gok -= ferro;
+    order = 0;
   }
- 
+
   try {
     const result = await prisma.safekeeping.update({
       where: {
