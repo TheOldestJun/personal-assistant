@@ -1,3 +1,4 @@
+
 function bufToBase64(buf) {
   return btoa(String.fromCharCode(...new Uint8Array(buf)));
 }

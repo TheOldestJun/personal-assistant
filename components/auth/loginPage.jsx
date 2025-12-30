@@ -4,8 +4,8 @@ import jwt from 'jsonwebtoken';
 import { useRouter } from 'next/navigation';
 import { useDispatch } from 'react-redux';
 
-import { encryptJwtWithSecret } from '@/libs/crypto';
-import { getClientSecret } from '@/libs/secretProvider';
+import { encryptJwtWithSecret } from '@/libs/api/crypto';
+import { getClientSecret } from '@/libs/api/secretProvider';
 import { login } from '@/store/reducers/authSlice';
 import {
   Card,

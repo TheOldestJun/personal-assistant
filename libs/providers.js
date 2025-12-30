@@ -9,8 +9,8 @@ import { login } from '@/store/reducers/authSlice';
 import { store } from '@/store/store';
 import { HeroUIProvider } from '@heroui/react';
 import { ToastProvider, addToast } from '@heroui/react';
-import { decryptJwtWithSecret } from './crypto';
-import { getClientSecret } from './secretProvider';
+import { decryptJwtWithSecret } from './api/crypto';
+import { getClientSecret } from './api/secretProvider';
 
 const AuthProvider = ({ children }) => {
   const dispatch = useDispatch();
