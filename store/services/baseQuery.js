@@ -1,19 +1,27 @@
 import { addToast } from '@heroui/react';
 import { fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
-const baseQuery = fetchBaseQuery({
+export const baseQuery = fetchBaseQuery({
   baseUrl: '/api',
+  credentials: 'include',
+  prepareHeaders: (headers) => {
+    headers.set('Content-Type', 'application/json');
+    return headers;
+  },
 });
 
-export const baseQueryWithToast = async (args, api, extraOptions) => {
+export const baseQueryWithErrorHandling = async (args, api, extraOptions) => {
   const result = await baseQuery(args, api, extraOptions);
 
   if (result.error) {
+    const message =
+      result.error?.data?.error?.message ||
+      'Невідома помилка';
+
     addToast({
-      title: 'Помилка',
-      description:
-        result.error?.data?.error?.message || 'Щось пішло не так',
       color: 'danger',
+      title: 'Помилка',
+      description: message,
     });
   }
 

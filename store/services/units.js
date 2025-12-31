@@ -1,12 +1,11 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
-export const unitsApi = createApi({
-  reducerPath: 'unitsApi',
-  baseQuery: fetchBaseQuery({ baseUrl: '/api/supply/units/' }),
-  tagTypes: ['Units'],
+import { api } from './api';
+
+export const unitsApi = api.injectEndpoints({
   endpoints: builder => ({
     getAllUnits: builder.query({
-      query: () => 'get-all',
+      query: () => '/supply/units/get-all',
       providesTags: result =>
         result
           ? [
@@ -17,7 +16,7 @@ export const unitsApi = createApi({
     }),
     createUnit: builder.mutation({
       query: ({ ...data }) => ({
-        url: 'create',
+        url: '/supply/units/create',
         method: 'POST',
         body: data,
       }),
@@ -25,7 +24,7 @@ export const unitsApi = createApi({
     }),
     deleteUnit: builder.mutation({
       query: id => ({
-        url: `delete?id=${id}`,
+        url: `/supply/units/delete?id=${id}`,
         method: 'DELETE',
       }),
       invalidatesTags: [{ type: 'Units', id: 'LIST' }],
