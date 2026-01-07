@@ -2,22 +2,23 @@ import { PrismaClient } from '@prisma/client';
 
 const globalForPrisma = globalThis;
 
-const prisma =
+const basePrisma =
   globalForPrisma.prisma ||
   new PrismaClient({
     log: ['query', 'warn', 'error'],
   });
 
-if (process.env.NODE_ENV !== 'production') globalForPrisma.prisma = prisma;
+if (process.env.NODE_ENV !== 'production') {
+  globalForPrisma.prisma = basePrisma;
+}
 
-prisma.$extends({
+const prisma = basePrisma.$extends({
   query: {
     $allModels: {
-      async $allOperations({ model, operation, args, query }) {
+      async $allOperations({ model, args, query }) {
         try {
           return await query(args);
         } catch (error) {
-          // 👇 автоматически определяем entity
           error.__entity = model?.toLowerCase();
           throw error;
         }

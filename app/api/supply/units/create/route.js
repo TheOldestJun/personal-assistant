@@ -1,17 +1,16 @@
 import { NextResponse } from 'next/server';
 
+import { withErrorHandling } from '@/libs/api/withErrorHandling';
 import prisma from '@/prisma';
 
-export async function POST(request) {
+export const POST = withErrorHandling(async (request) => {
   const { title } = await request.json();
-  try {
-    const unit = await prisma.unit.create({
-      data: {
-        title,
-      },
-    });
-    return NextResponse.json(unit, { status: 201 });
-  } catch (error) {
-    return NextResponse.json({ error: error.message }, { status: 500 });
-  }
-}
+
+  const product = await prisma.unit.create({
+    data: {
+      title,
+    }
+  });
+
+  return NextResponse.json(product);
+});

@@ -1,12 +1,10 @@
 import { NextResponse } from 'next/server';
 
+import { withErrorHandling } from '@/libs/api/withErrorHandling';
 import prisma from '@/prisma';
 
-export async function GET() {
-  try {
+export const GET = withErrorHandling(async () => {
     const units = await prisma.unit.findMany();
     return NextResponse.json(units, { status: 200 });
-  } catch (error) {
-    return NextResponse.json({ error: error.message }, { status: 500 });
-  }
 }
+)

@@ -15,6 +15,7 @@ const NOT_FOUND_MESSAGES = {
 };
 
 export function parsePrismaError(error, context = {}) {
+  
   if (error instanceof Prisma.PrismaClientKnownRequestError) {
     const entity =
       context.entity ||
